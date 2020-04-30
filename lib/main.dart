@@ -36,11 +36,13 @@ class _DateTimePickerPageState extends State<DateTimePickerPage> {
   @override
   void initState() {
     super.initState();
-    entrata = TimeOfDay.now();
-    inizioPausaPranzo = TimeOfDay.now();
-    finePausaPranzo = TimeOfDay.now();
-    uscita = TimeOfDay.now();
-    totale = '';
+    entrata = TimeOfDay(hour: 9, minute: 0);
+    inizioPausaPranzo = TimeOfDay(hour: 12, minute: 50);
+    finePausaPranzo = TimeOfDay(hour: 13, minute: 50);
+    uscita = TimeOfDay(hour: 18, minute: 10);
+    int totmin = calTotalMinute(entrata, inizioPausaPranzo) +
+        calTotalMinute(finePausaPranzo, uscita);
+    totale = minToString(totmin);
   }
 
   @override
@@ -91,6 +93,9 @@ class _DateTimePickerPageState extends State<DateTimePickerPage> {
     if (te != null) {
       setState(() {
         entrata = te;
+        int totmin = calTotalMinute(entrata, inizioPausaPranzo) +
+            calTotalMinute(finePausaPranzo, uscita);
+        totale = minToString(totmin);
       });
     }
   }
@@ -100,6 +105,9 @@ class _DateTimePickerPageState extends State<DateTimePickerPage> {
     if (te != null) {
       setState(() {
         inizioPausaPranzo = te;
+        int totmin = calTotalMinute(entrata, inizioPausaPranzo) +
+            calTotalMinute(finePausaPranzo, uscita);
+        totale = minToString(totmin);
       });
     }
   }
@@ -109,6 +117,9 @@ class _DateTimePickerPageState extends State<DateTimePickerPage> {
     if (te != null) {
       setState(() {
         finePausaPranzo = te;
+        int totmin = calTotalMinute(entrata, inizioPausaPranzo) +
+            calTotalMinute(finePausaPranzo, uscita);
+        totale = minToString(totmin);
       });
     }
   }
