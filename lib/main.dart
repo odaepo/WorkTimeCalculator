@@ -36,7 +36,7 @@ class _DateTimePickerPageState extends State<DateTimePickerPage> {
   @override
   void initState() {
     super.initState();
-    entrata = TimeOfDay(hour: 9, minute: 0);
+    entrata = TimeOfDay(hour: 9, minute: 10);
     inizioPausaPranzo = TimeOfDay(hour: 12, minute: 50);
     finePausaPranzo = TimeOfDay(hour: 13, minute: 50);
     uscita = TimeOfDay(hour: 18, minute: 10);
@@ -77,10 +77,9 @@ class _DateTimePickerPageState extends State<DateTimePickerPage> {
               trailing: Icon(Icons.keyboard_arrow_down),
               onTap: _pickTimeUscita,
             ),
+            Text("=================================="),
             ListTile(
               title: Text("Tempo: ${totale}"),
-              trailing: Icon(Icons.keyboard_arrow_down),
-              onTap: _pickTimeUscita,
             ),
           ],
         ),
@@ -101,7 +100,8 @@ class _DateTimePickerPageState extends State<DateTimePickerPage> {
   }
 
   _pickTimeInizioPausaPranzo() async {
-    TimeOfDay te = await showTimePicker(context: context, initialTime: entrata);
+    TimeOfDay te =
+        await showTimePicker(context: context, initialTime: inizioPausaPranzo);
     if (te != null) {
       setState(() {
         inizioPausaPranzo = te;
@@ -113,7 +113,8 @@ class _DateTimePickerPageState extends State<DateTimePickerPage> {
   }
 
   _pickTimeFinePausaPranzo() async {
-    TimeOfDay te = await showTimePicker(context: context, initialTime: entrata);
+    TimeOfDay te =
+        await showTimePicker(context: context, initialTime: finePausaPranzo);
     if (te != null) {
       setState(() {
         finePausaPranzo = te;
@@ -125,7 +126,7 @@ class _DateTimePickerPageState extends State<DateTimePickerPage> {
   }
 
   _pickTimeUscita() async {
-    TimeOfDay te = await showTimePicker(context: context, initialTime: entrata);
+    TimeOfDay te = await showTimePicker(context: context, initialTime: uscita);
     if (te != null) {
       setState(() {
         uscita = te;
@@ -147,8 +148,8 @@ class _DateTimePickerPageState extends State<DateTimePickerPage> {
 
   ///Calculates the amount of time from a [startTime] and an [endTime].
   String minToString(int min) {
-    int ore = (min / 60).round();
-    int minuti = min - ore * 60;
-    return '${ore}:${minuti}';
+    final int hour = min ~/ 60;
+    final int minutes = min % 60;
+    return '${hour.toString().padLeft(2, "0")}:${minutes.toString().padLeft(2, "0")}';
   }
 }
